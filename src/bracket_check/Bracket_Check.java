@@ -16,7 +16,6 @@ http://goo.gl/eb12iW
 */
 
 package bracket_check;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
