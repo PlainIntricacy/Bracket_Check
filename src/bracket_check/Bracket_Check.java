@@ -1,3 +1,20 @@
+/*
+Code bracket checker.
+
+Checks given input for proper code bracket etiquette.
+
+A line of code is considered proper it obeys the following bracket order:
+
+<{[()]}>
+
+Returns true if all brackets are paired and ordered correctly, false if not.
+
+Based on this reddit daily challenge:
+
+http://goo.gl/eb12iW
+
+*/
+
 package bracket_check;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -9,63 +26,32 @@ import java.util.Scanner;
  */
 public class Bracket_Check {
     
-    public static ArrayList<Character> BrkList = new ArrayList<Character>();
-    public static String str = "([{<)]}>";
-    public static char[] brackets = str.toCharArray();
-
-    public static void main(String[] args) {
-
+    public static String brk = "<{[()]}>";
+    
+    public static void main(String[] args){
+        
         Scanner input = new Scanner(System.in);
         System.out.println("Please enter your code:");
         String in = input.nextLine();
         input.close();
-        System.out.println(BrkCheck(in));
+        System.out.println(CheckBrk(getBrk(in)).isEmpty());
         
     }
     
-    public static boolean BrkCheck(String q){
-        boolean check;
+    public static String getBrk(String q){
+        String x="";
         for(int i=0; i<q.length(); i++){
-            if(isBrk(q.charAt(i))){
-                BrkList.add(q.charAt(i));
+            for(int j=0; j<brk.length(); j++){
+                if(q.substring(i, i+1).equals(brk.substring(j, j+1))){
+                    x+=q.substring(i, i+1);
+                }
             }
         }
-        if(BrkList.isEmpty()==false){
-            if(BrkList.size()%2==1){
-                return false;
-            }else{
-                int i=0;
-                do{
-                    check=false;
-                    for(int j=i+1; j<BrkList.size(); j++){
-                        if(BrkType(BrkList.get(i))+4==BrkList.get(j)){
-                            check=true;
-                        }
-                    }
-                    i++;
-                }while(i<BrkList.size()&&check==true);
-                return check;
-            }
-        }else{
-            return false;
-        }
+        return x;
     }
     
-    public static boolean isBrk(Character x){
-        for(int i=0; i<brackets.length; i++){
-            if(brackets[i]==x){
-                return true;
-            }
-        }
-        return false;        
+    public static String CheckBrk(String q){
+        return q.replace("()", "").replace("[]", "").replace("{}", "").replace("<>", "");
     }
     
-    public static int BrkType(char q){
-        for(int i=0; i<brackets.length; i++){
-            if(q==brackets[i]){
-                return i;
-            }
-        }
-        return -1;
-    }
 }
